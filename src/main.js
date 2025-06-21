@@ -12,10 +12,18 @@ function Book (title, author, pages, read) {
     this.pages = pages;
     this.read = read;
     this.info = () => {
-        return `${this.title} by ${this.author}, ${pages} pages, ${read ? "read it" : "not read yet"}`
+        return `${this.id} ${this.title} by ${this.author}, ${pages} pages, ${read ? "read it" : "not read yet"}`
     }
 }
 
-let theHobbit = new Book("The Hobbit", "J.R.R Tolkien", 295, false);
-console.log(theHobbit.info());
+// let theHobbit = new Book("The Hobbit", "J.R.R Tolkien", 295, false);
+// console.log(theHobbit.info());
+
+function addBookToLibrary (title, author, pages, read) {
+    let myBook = new Book(title, author, pages, read);
+    myLibrary.push(myBook);
+}
+
+// addBookToLibrary("The Hobbit", "J.R.R Tolkien", 295, false);
+// console.log(myLibrary);
 
