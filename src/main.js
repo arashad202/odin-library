@@ -35,68 +35,79 @@ addBookToLibrary("The Hobbit", "J.R.R Tolkien", 295, false);
 const myBookList = document.querySelector("#bookList");
 
 // for everybook in view return a card for the book and store all cards in an array and append the new card to the booklistview
-const bookCards = myLibrary.map((book) => {
-  return `
-     <div class="w-[300px] h-[300px] border border-black rounded-3xl px-5 py-5 mx-5 my-5">
-        <ul>
-          <li><span class="font-bold">ID:</span> ${book.id}</li>
-          <li><span class="font-bold">Title:</span> ${book.title}</li>
-          <li><span class="font-bold">Author:</span> ${book.author}</li>
-          <li><span class="font-bold">Pages:</span> ${book.pages}</li>
-          <li><span class="font-bold">read:</span> ${book.read}</li>
-        </ul>
-      </div>`;
-});
+// const bookCards = myLibrary.map((book) => {
+//   return `
+//      <div id="${book.id}" data-id="${book.id}" class="card w-[300px] h-[300px] border border-black rounded-3xl px-5 py-5 mx-5 my-5 flex flex-col justify-between">
+//         <ul class="flex flex-col justify-between h-[100%]">
+//           <li><span class="font-bold">ID:</span> ${book.id}</li>
+//           <li><span class="font-bold">Title:</span> ${book.title}</li>
+//           <li><span class="font-bold">Author:</span> ${book.author}</li>
+//           <li><span class="font-bold">Pages:</span> ${book.pages}</li>
+//           <li><span class="font-bold">read:</span> ${book.read}</li>
+//         </ul>
+//       <button class="remove-book border border-black py-2 px-4 mt-3 rounded-2xl hover:bg-black hover:text-white" >remove</button>
+//       </div>`;
+// });
 
-myBookList.innerHTML = bookCards.join(" ");
-
-
-
+// myBookList.innerHTML = bookCards.join(" ");
 
 // access forms and its buttons to show and hide it
 const showForm = document.querySelector(".show-form");
 const myForm = document.querySelector("form");
-const closeForm = document.querySelector('.close-form');
+const closeForm = document.querySelector(".close-form");
 
-showForm.addEventListener('click', () => {
-  myForm.classList.remove('hidden');
+showForm.addEventListener("click", () => {
+  myForm.classList.remove("hidden");
 });
 
-closeForm.addEventListener('click', () => {
-  myForm.classList.add('hidden');
+closeForm.addEventListener("click", () => {
+  myForm.classList.add("hidden");
 });
 
 // on form submit get data and render new card
 myForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  
+
   const formData = new FormData(myForm);
   const title = formData.get('title');
   const author = formData.get('author');
   const pages = parseInt(formData.get('pages'), 10);
   const read = formData.get('read') === 'yes';
-  
-  const book = new Book(title, author, pages, read);  // create book once
-  myLibrary.push(book);  // store it
 
-  const newCard = `
-    <div class="w-[300px] h-[300px] border border-black rounded-3xl px-5 py-5 mx-5 my-5">
-      <ul>
-        <li><span class="font-bold">ID:</span> ${book.id}</li>
-        <li><span class="font-bold">Title:</span> ${book.title}</li>
-        <li><span class="font-bold">Author:</span> ${book.author}</li>
-        <li><span class="font-bold">Pages:</span> ${book.pages}</li>
-        <li><span class="font-bold">read:</span> ${book.read}</li>
-      </ul>
-    </div>`;
-  
-  myBookList.insertAdjacentHTML('beforeend', newCard);
+  const book = new Book(title, author, pages, read);
+  myLibrary.push(book);
+
+  // Create the card element manually
+  const newCard = document.createElement('div');
+  newCard.id = book.id;
+  newCard.dataset.id = book.id;
+  newCard.className = "card w-[300px] h-[300px] border border-black rounded-3xl px-5 py-5 mx-5 my-5 flex flex-col justify-between";
+
+  newCard.innerHTML = `
+    <ul class="flex flex-col justify-between h-[100%]">
+      <li><span class="font-bold">ID:</span> ${book.id}</li>
+      <li><span class="font-bold">Title:</span> ${book.title}</li>
+      <li><span class="font-bold">Author:</span> ${book.author}</li>
+      <li><span class="font-bold">Pages:</span> ${book.pages}</li>
+      <li><span class="font-bold">read:</span> ${book.read}</li>
+    </ul>
+    <button class="remove-book border border-black py-2 px-4 mt-3 rounded-2xl hover:bg-black hover:text-white">remove</button>
+  `;
+
+  // Append the new card
+  myBookList.appendChild(newCard);
+
+  // Select the button *inside* this card
+  const removeBtn = newCard.querySelector('.remove-book');
+  removeBtn.addEventListener('click', () => {
+    const id = newCard.dataset.id;
+    const index = myLibrary.findIndex(book => book.id === id);
+    if (index !== -1) {
+      myLibrary.splice(index, 1);
+    }
+    newCard.remove();
+  });
 
   myForm.reset();
   myForm.classList.add('hidden');
 });
-
-
-
-
-
