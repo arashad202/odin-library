@@ -4,22 +4,40 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/book.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/src/style.css" rel="stylesheet">
+    <link href="/src/style.css" rel="stylesheet" />
     <script type="module" src="/src/main.js" defer></script>
     <title>Odin Library</title>
   </head>
-  <body>
-    <h1>Odin Library</h1>
-    <div class="my-5 mx-5 flex flex-wrap" id="bookList">
-      <div class="w-[300px] h-[300px] border border-black rounded-3xl px-5 py-5">
-        <ul>
-          <li>ID: </li>
-          <li>Title: </li>
-          <li>Author: </li>
-          <li>Pages read: </li>
-          <li>read: </li>
-        </ul>
+  <body py-5 px-5>
+    <h1 class="my-5 mx-5 text-4xl font-bold">Odin Library</h1>
+    <button class="show-form border border-black py-2 px-4 mx-5 my-5 rounded-2xl hover:bg-black hover:text-white">Add Book +</button>
+    <form class="grid grid-rows-[repeat(6,40px)] border border-black rounded-2xl mx-4 p-4 w-[350px] hidden" action="">
+      <div class="flex items-center">
+        <label for="title">Title: </label>
+        <input class=" p-1 border boder-black rounded-1xl ml-3" type="text" name="title" id="title">
       </div>
-    </div>
+      <div class="flex items-center">
+        <label for="author">Author: </label>
+        <input class=" p-1 border boder-black rounded-1xl ml-3" type="text" name="author" id="author">
+      </div>
+      <div class="flex items-center">
+        <label for="Pages">Pages: </label>
+        <input class="p-1 border boder-black rounded-1xl ml-3" type="number" name="pages" id="pages">
+      </div>
+      <label> Did you read the book?</label>
+      <div class="flex items-center">
+        <label for="yes">Yes</label>
+        <input class="ml-3" type="radio" name="read" id="yes" value="yes">
+      </div>
+      <div class="flex items-center">
+        <label for="no">No</label>
+        <input class="ml-3" type="radio" name="read" id="no" value="no">
+      </div>
+      <div>
+        <button class="add-book border border-black py-2 px-4 mx-5 my-5 rounded-2xl hover:bg-black hover:text-white" type="submit">Add Book</button>
+        <button class="close-form border border-black py-2 px-4 mx-5 my-5 rounded-2xl hover:bg-black hover:text-white">Close form</button>
+      </div>
+    </form>
+    <div class="my-5 mx-5 flex flex-wrap" id="bookList"></div>
   </body>
 </html>
