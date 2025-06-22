@@ -73,6 +73,11 @@ myForm.addEventListener('submit', (event) => {
   const author = formData.get('author');
   const pages = parseInt(formData.get('pages'), 10);
   const read = formData.get('read') === 'yes';
+  let isRead = true;
+  if (read === 'no') {
+    isRead = false;
+  }
+
 
   const book = new Book(title, author, pages, read);
   myLibrary.push(book);
@@ -81,6 +86,7 @@ myForm.addEventListener('submit', (event) => {
   const newCard = document.createElement('div');
   newCard.id = book.id;
   newCard.dataset.id = book.id;
+  newCard.dataset.read = book.read;
   newCard.className = "card w-[300px] h-[300px] border border-black rounded-3xl px-5 py-5 mx-5 my-5 flex flex-col justify-between";
 
   newCard.innerHTML = `
@@ -89,13 +95,28 @@ myForm.addEventListener('submit', (event) => {
       <li><span class="font-bold">Title:</span> ${book.title}</li>
       <li><span class="font-bold">Author:</span> ${book.author}</li>
       <li><span class="font-bold">Pages:</span> ${book.pages}</li>
-      <li><span class="font-bold">read:</span> ${book.read}</li>
+      <li class="read-status"><span class="font-bold">read:</span> ${book.read}</li>
     </ul>
+    <button class="toggle-read border border-black py-2 px-4 mt-3 rounded-2xl hover:bg-black hover:text-white ${book.read ? "hidden" : ""}">Have read the book</button>
     <button class="remove-book border border-black py-2 px-4 mt-3 rounded-2xl hover:bg-black hover:text-white">remove</button>
   `;
 
   // Append the new card
   myBookList.appendChild(newCard);
+
+  const toggleRead = newCard.querySelector('.toggle-read');
+  const read_element = newCard.querySelector('.read-status');
+  toggleRead.addEventListener('click', () => {
+    const index = myLibrary.findIndex(book => book.id === newCard.dataset.id);
+    if (index !== -1) {
+      // Toggle the boolean value
+      myLibrary[index].read = !myLibrary[index].read;
+
+      // Update the DOM
+      read_element.innerHTML = `<span class="font-bold">read:</span> ${myLibrary[index].read}`;
+    }
+    toggleRead.classList.add('hidden');
+  });
 
   // Select the button *inside* this card
   const removeBtn = newCard.querySelector('.remove-book');
