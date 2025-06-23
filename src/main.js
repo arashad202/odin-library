@@ -1,23 +1,41 @@
 // initialize library
 const myLibrary = [];
 
-// constructor function to create books
-function Book(title, author, pages, read) {
-  if (!new.target) {
-    throw Error("You must use the 'new' operator to call the constructor");
+//book class
+class book {
+  constructor (title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
   }
-
-  this.id = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = () => {
-    return `${this.id} ${this.title} by ${this.author}, ${pages} pages, ${
-      read ? "read it" : "not read yet"
-    }`;
-  };
 }
+
+// library class
+class library {
+  myLibrary = []
+
+  addBookToLibrary(book) {
+    this.myLibrary.push(book);
+  }
+}
+// constructor function to create books
+// function Book(title, author, pages, read) {
+//   if (!new.target) {
+//     throw Error("You must use the 'new' operator to call the constructor");
+//   }
+
+//   this.id = crypto.randomUUID();
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.read = read;
+//   this.info = () => {
+//     return `${this.id} ${this.title} by ${this.author}, ${pages} pages, ${
+//       read ? "read it" : "not read yet"
+//     }`;
+//   };
+// }
 
 // let theHobbit = new Book("The Hobbit", "J.R.R Tolkien", 295, false);
 // console.log(theHobbit.info());
