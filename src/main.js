@@ -41,13 +41,13 @@ class library {
 // console.log(theHobbit.info());
 
 // function to add book to library
-function addBookToLibrary(title, author, pages, read) {
-  let myBook = new Book(title, author, pages, read);
-  myLibrary.push(myBook);
-}
+// function addBookToLibrary(title, author, pages, read) {
+//   let myBook = new Book(title, author, pages, read);
+//   myLibrary.push(myBook);
+// }
 
 // add a book to the library for testing
-addBookToLibrary("The Hobbit", "J.R.R Tolkien", 295, false);
+//addBookToLibrary("The Hobbit", "J.R.R Tolkien", 295, false);
 
 // access the booklist view
 const myBookList = document.querySelector("#bookList");
@@ -68,6 +68,8 @@ const myBookList = document.querySelector("#bookList");
 // });
 
 // myBookList.innerHTML = bookCards.join(" ");
+// initialize a library
+const theLibrary = new library();
 
 // access forms and its buttons to show and hide it
 const showForm = document.querySelector(".show-form");
@@ -96,9 +98,13 @@ myForm.addEventListener('submit', (event) => {
     isRead = false;
   }
 
-
-  const book = new Book(title, author, pages, read);
-  myLibrary.push(book);
+  // initialize a book
+  const book = new book(title, author, pages, read);
+  //const book = new Book(title, author, pages, read);
+  
+  // add book to the library
+  theLibrary.addBookToLibrary();
+  //myLibrary.push(book);
 
   // Create the card element manually
   const newCard = document.createElement('div');
